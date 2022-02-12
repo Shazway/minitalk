@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:09:22 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/02/12 04:40:50 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/02/12 23:51:41 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 # define ERR_SIGNAL "No signal could be sent\n"
 # define ERR_ARG "Wrong usage\nTry : ./client PID *message*\n"
 # define ERR_PID "The PID must be a valid number\n"
+# define BUFFER_SIZE 3
 
 typedef struct	s_content
 {
 	char				c;
 	int					i;
+	int					j;
 	char				*str;
+	char				buffer[BUFFER_SIZE + 1];
 	int					pid;
 }				t_content;
 
