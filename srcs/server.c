@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 02:37:45 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/02/13 14:18:57 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/02/13 16:22:40 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_content	g_data;
 
-void	display_message_flush(void)
+void	display_message_free(void)
 {
 	write(1, g_data.str, ft_strlen(g_data.str));
 	write(1, "\n", 1);
@@ -41,7 +41,7 @@ void	convert_signal(int binary)
 			free(tmp);
 			if (g_data.c == 0)
 			{
-				display_message_flush();
+				display_message_free();
 				return ;
 			}
 		}
