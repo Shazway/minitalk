@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/12 02:37:45 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/02/13 16:22:40 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/02/14 02:31:04 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,19 @@ void	convert_signal(int binary)
 	}
 }
 
+int	hook_signals(void)
+{
+	if (sigaction(SIGUSR1, g_data.sa, NULL) == -1)
+		return (0);
+	if (sigaction(SIGUSR2, g_data.sa, NULL) == -1)
+		return (0);
+	return (1);
+}
+
 void	sig_info(int signal, siginfo_t *s, void *trash)
 {
 	(void)trash;
+	hook_signals();
 	if (signal == SIGUSR1)
 		convert_signal(0);
 	if (signal == SIGUSR2)
@@ -64,33 +74,23 @@ void	sig_info(int signal, siginfo_t *s, void *trash)
 	kill(g_data.pid, SIGUSR1);
 }
 
-int	hook_signals(struct sigaction *sa)
-{
-	if (sigaction(SIGUSR1, sa, NULL) == -1)
-		return (0);
-	if (sigaction(SIGUSR2, sa, NULL) == -1)
-		return (0);
-	return (1);
-}
-
 int	main(void)
 {
-	struct sigaction	*sa;
-
 	if (getpid() == -1)
 		return (1);
-	sa = malloc(sizeof(struct sigaction));
-	if (!sa)
+	g_data.sa = malloc(sizeof(struct sigaction));
+	if (!g_data.sa)
 		return (1);
-	sa->sa_sigaction = sig_info;
+	g_data.sa->sa_sigaction = sig_info;
 	g_data.i = 0;
 	g_data.c = 0;
 	g_data.j = 0;
 	g_data.str = NULL;
 	ft_memset(g_data.buffer, 0, BUFFER_SIZE);
 	ft_printf("PID : %d\n", getpid());
-	while (hook_signals(sa))
+	hook_signals();
+	while (1)
 		pause();
-	free(sa);
+	free(g_data.sa);
 	return (0);
 }

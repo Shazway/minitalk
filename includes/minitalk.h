@@ -6,7 +6,7 @@
 /*   By: tmoragli <tmoragli@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:09:22 by tmoragli          #+#    #+#             */
-/*   Updated: 2022/02/13 14:11:45 by tmoragli         ###   ########.fr       */
+/*   Updated: 2022/02/14 01:04:21 by tmoragli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_content
 	char				*str;
 	char				buffer[BUFFER_SIZE + 1];
 	int					pid;
+	struct sigaction	*sa;
 }				t_content;
 
 #endif
